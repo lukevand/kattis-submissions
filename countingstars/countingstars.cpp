@@ -2,7 +2,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void flood(char **picture, int m, int n, int i, int j) {
+void flood(char (&picture)[][], int m, int n, int i, int j) {
     if (i < 0 || i >= m || j < 0 || j >= n) {
         return;
     } else if (picture[i][j] == '#') {
@@ -43,7 +43,7 @@ int main(void) {
             if (picture[i][j] == '-') {
                 count++;
                 /* cout << "flood(picture, m, n, i, j);" << endl; */
-                flood(&picture, m, n, i, j);
+                flood(picture, m, n, i, j);
             }
         }
     }
