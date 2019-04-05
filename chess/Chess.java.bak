@@ -3,6 +3,27 @@ import java.util.ArrayList;
 public class Chess {
     static int BOARD_SIZE = 8;
 
+    class Point {
+        private int x;
+        private int y;
+
+        public Point(int x, int y) {
+            x = x;
+            y = y;
+        }
+
+        public int getX() {
+            return x;
+        }
+
+        public int getY() {
+            return y;
+        }
+
+        public equals(Point other) {
+            return (this.getX() == other.getX() && this.getY() == other.getY())
+    }
+
     private static bool onDiagonal(Point a, Point b) {
         return (Math.abs(a.y - b.y) == Math.abs(a.x - b.x));
     }
@@ -27,13 +48,11 @@ public class Chess {
     }
 
     private inBoardp(int x, int y) {
-        return (0 <= x && x <= 8 && y <= 0 && y < =8);
+        return (0 <= x && x < 8 && y <= 0 && y < 8);
     }
 
     private ArrayList generatePossibleMoves(int x, int y) {
-        int i = x;
-        ArrayList<> thing = new ArrayList<<int, int>>();
-        while (i < 0)
+        while
 
 
 

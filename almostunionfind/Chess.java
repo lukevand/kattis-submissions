@@ -32,8 +32,7 @@ public class Chess {
 
     private ArrayList generatePossibleMoves(int x, int y) {
         int i = x;
-        ArrayList<> thing = new ArrayList<<int, int>>();
-        while (i < 0)
+        while (i <
 
 
 
