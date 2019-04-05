@@ -7,3 +7,4 @@ for line in sys.stdin:
         print("Your wish is granted!")
     else:
         print("You will become a flying monkey!")
+
