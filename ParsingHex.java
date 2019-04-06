@@ -25,23 +25,13 @@ class ParsingHex {
                 while (end < s.length() && (('a' <= s.charAt(end) && s.charAt(end) <= 'f') || ('A' <= s.charAt(end) && s.charAt(end) <= 'F') || ('0' <= s.charAt(end) && s.charAt(end) <= '9'))) {
                     end++;
                 }
-                // System.err.printf("Start: %d, end: %d\n", start, end);
                 word = s.substring(start, end);
                 if (word.length() > 8) {
                     word = word.substring(0, 8);
                 }
-                // System.err.println(word);
                 lword = Long.parseLong(word, 16);
-                // while (lword > 0xffffffffL) {
-                //     System.out.println("HELLO");
-                //     // prune some digits
-                //     word = word.substring(0, word.length()-1);
-                //     lword = Long.parseLong(word, 16);
-                // }
-                // System.out.println(word + " " + lword);
 
                 System.out.printf("0%c%s %d\n", lead_x, word, lword);
-                // System.out.printf("%s\n");
                 start = end;
                 i = end;
                 in_hex = false;
