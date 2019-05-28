@@ -3,35 +3,32 @@ using namespace std;
 
 typedef vector<int> vi;
 
+#define debugp(X) for(auto const& CCC:X) std::cerr<<CCC<<' '; cerr<<'\n'
+#define debugvii(X) for(auto const& CCC:X) std::cerr<<CCC.first<<', '<<CC.second << '\n'
+#define debug(XXX) cerr << #XXX << ": " << XXX << '\n'
+
+
+int v[10000];
+bitset<10001> seen;
+
 int main()
 {
     int n;
-    int a;
-    int b;
-    int bcount;
+    int x;
+    int diff;
     while (scanf("%d:", &n), n) {
-        vi v;
-        vi tried;
-        tried.assign(2*n, 0);
+        seen.reset();
+        memset(v, 0, sizeof v);
         for (int i=0;i<n;i++) {
-            scanf("%d", &a);
-            v.push_back(a);
+            scanf("%d", &x);
+            v[i] = x;
         }
-        bcount=0;
-        for (int i=0; i < n-2; i++) {
-            for (int j=i+1; j < n-1; j++) {
-            b = v[i]-v[j];
-            if (tried[b+n]) {
-                break;
-            }
-                for (int k=j+1; k<n; k++) {
-                    if (b == v[j]-v[k]) {
-                        printf("no\n");
-                        printf("%d %d %d\n", i, j, k);
-                        goto done;
-                    }
-                }
-                tried[b+n] = 1;
+        seen.reset();
+        for (int i=0; i < n-1; i++) {
+            for (int j=i+1; j < n; j++) {
+                seen.set(v[i], 1);
+                diff = v[j] - v[i];
+                debug(diff);
             }
         }
         printf("yes\n");

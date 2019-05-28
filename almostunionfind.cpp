@@ -5,7 +5,7 @@ typedef vector<int> vi;
 
 class UnionFind {
     private:
-    vi parent, rank, setSize, setSum, child;
+    vi parent, rank, setSize, setSum, value;
     int numSets;
     public:
     UnionFind(int n) {
@@ -16,7 +16,7 @@ class UnionFind {
         for (int i = 0; i < n; i++) {
             parent[i] = i;
             setSum[i] = i;
-            child[i] = i;
+            value[i] = i;
         }
     }
 
@@ -49,7 +49,7 @@ class UnionFind {
     }
 
     void move(int p, int q) {
-        int some_child = p.child;
+
 
     void status() {
         printf("%d %d\n", setSize, setSum);
