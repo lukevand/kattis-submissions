@@ -11,31 +11,28 @@ typedef vector<int> vi;
 int v[10000];
 bitset<10001> seen;
 
+// a1 - a2 = c && a2 - a3 = c => a3 = 2*a2 - a1
 int main()
 {
     int n;
-    int x;
-    int diff;
     while (scanf("%d:", &n), n) {
-        seen.reset();
         memset(v, 0, sizeof v);
-        for (int i=0;i<n;i++) {
-            scanf("%d", &x);
-            v[i] = x;
-        }
         seen.reset();
-        for (int i=0; i < n-1; i++) {
-            for (int j=i+1; j < n; j++) {
-                seen.set(v[i], 1);
-                diff = v[j] - v[i];
-                debug(diff);
+        bool done=false;
+        for (int i=0; i<n;i++) {
+            scanf("%d", &v[i]);
+            if (done) continue;
+            seen.set(v[i], 1);
+            for (int j=0, testn; !done && j < i; j++) {
+                testn = 2*v[i] - v[j];
+                if (0 <= testn && testn < n && !seen.test(testn)) {
+                    done=true;
+                    break;
+                }
             }
         }
-        printf("yes\n");
-done:
-        ;
+        printf("%s\n", (done ? "no" : "yes"));
     }
-
 
     return 0;
 }
