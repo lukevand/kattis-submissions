@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef long long ll;
 typedef pair<int, int> ii;
 typedef vector<ii> vii;
 typedef vector<int> vi;
@@ -16,7 +15,7 @@ bool insidep(int x, int y) {
 
 vii gen_pos(int x, int y) {
     vii a;
-    for (int i=-10; i<= 10; i++) {
+    for (int i=-8; i<= 8; i++) {
         /* debug(x+i); */
         /* debug(y+i); */
         if (insidep(x+i, y+i)) {

@@ -5,9 +5,10 @@ using namespace std;
 #define debug(XXX) cerr << #XXX << ": " << XXX << '\n'
 
 int n, m;
-int cost[102]; // Cost of each item on menu
-int S[102][30002]; // optimal solution
-int orders[1002];
+int cost[105]; // Cost of each item on menu
+int S[102][30005]; // optimal solution
+int orders[1010];
+int maxorder = -1;
 
 void ptable(int cap) {
     vector<int> result;
@@ -16,7 +17,7 @@ void ptable(int cap) {
         if (i > 0 && S[i][j] != S[i-1][j]) { // move left
             result.push_back(i+1);
             j -= cost[i];
-        } else if (i == 0 && S[i][j] == 1) {
+        } else if (i == 0) {
             result.push_back(i+1);
             j -= cost[i];
         } else { // move up
@@ -33,7 +34,6 @@ void ptable(int cap) {
 
 int main()
 {
-    int maxorder = -1;
     scanf("%d", &n);
     for (int i=0; i<n; i++) {
         scanf("%d", &cost[i]);
@@ -63,14 +63,14 @@ int main()
         }
     }
 
-    for (int i=0; i<n; i++) {
-        /* printf("%d", S[i][maxorder-1]); */
-        for (int j=0; j<maxorder; j++) {
-            printf("%d ", S[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n");
+    /* for (int i=0; i<n; i++) { */
+    /*     /1* printf("%d", S[i][maxorder-1]); *1/ */
+    /*     for (int j=maxorder-10; j<maxorder; j++) { */
+    /*         printf("%d ", S[i][j]); */
+    /*     } */
+    /*     printf("\n"); */
+    /* } */
+    /* printf("\n"); */
     /* debugp(orders); */
 
     // trace back though table
@@ -92,4 +92,3 @@ int main()
 
     return 0;
 }
-
