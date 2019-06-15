@@ -33,25 +33,26 @@ int brute()
             tot += su;
         }
     }
-    printf("%lld\n", tot);
+    printf("brute: %lld\n", tot);
 
     return 0;
 }
 
 int main()
 {
-    /* brute(); */
     scanf("%d", &N);
     for (int i=0; i<N; i++) {
         scanf("%d", &fruits[i]);
         sum += fruits[i];
     }
     total = (1L << (N-1)) * sum;
+    /* debug(total); */
     for (int i=0; i<N; i++) {
         if (fruits[i] < 200) {
             total -= fruits[i];
         }
     }
+    /* debug(total); */
     for (int i=1; i<N; i++) {
         for (int j=0;j<i; j++) {
             if (fruits[i]+fruits[j] < 200) {
@@ -59,19 +60,19 @@ int main()
             }
         }
     }
+    /* debug(total); */
     for (int i=2; i<N; i++) {
         for (int j=1;j<i; j++) {
             for (int k=0;k<j; k++) {
-                if (fruits[i]+fruits[j]+fruits[j] < 200) {
+                /* printf("%d %d %d\n", i, j, k); */
+                if (fruits[i]+fruits[j]+fruits[k] < 200) {
+                    /* debug(fruits[i]+fruits[j]+fruits[k]); */
                     total -= fruits[i]+fruits[j]+fruits[k];
                 }
             }
         }
     }
     printf("%llu\n", total);
-    brute();
-
-
-
+    /* brute(); */
     return 0;
 }
