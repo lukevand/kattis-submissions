@@ -30,7 +30,7 @@ class UnionFind {
         return p;
     }
 
-    void unionn(int p1, int p2) {
+    void unite(int p1, int p2) {
         int x = find(p1);
         int y = find(p2);
         if (x != y) {
@@ -68,7 +68,7 @@ int main() {
         scanf("%d %d %*d", &cmd, &p, &q);
         switch (cmd) {
             case 1:
-                uu.unionn(p, q);
+                uu.unite(p, q);
                 break;
             case 2:
                 uu.move(p, q);

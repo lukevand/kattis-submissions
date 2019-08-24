@@ -1,6 +1,10 @@
 *.class
 *.zip
 *.out
+*.bak
+*.old
+__pycache__
+io
 
 # kattis input output files
 *.ans

@@ -1,9 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define debugp(X) for(auto const& CCC:X) std::cerr<<CCC<<' '; cerr<<'\n'
-#define debug(XXX) cerr << #XXX << ": " << XXX << '\n'
-
 int main()
 {
     int N;
