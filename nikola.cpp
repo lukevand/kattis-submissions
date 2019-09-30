@@ -2,86 +2,49 @@
 
 using namespace std;
 
-typedef pair<int, int> ii;
-typedef vector<int> vi;
-typedef vector<ii> vii;
-#define INF 1000000000
-
-#define debug(XXX) cerr << #XXX << ": " << XXX << '\n'
-#define debugp(X) cerr << #X << ": "; for(auto const& CCC:X) std::cerr<<CCC<<' '; cerr<<'\n'
-#define debuga(X, _a, _b) cerr << #X << ": "; for (int _i=_a; _i<_b; _i++) cout << X[_i] << " "; cout << '\n';
-
-int C[1003];
-int N;
-
-struct state {
-    int dist, pos, prev_jump;
-    state(int _d, int _p, int _prev) : dist(_d), pos(_p), prev_jump(_prev) {};
-    bool operator<(const state& rhs) const { return dist < rhs.dist; }
-};
+typedef pair<int, int> II;
+typedef pair<int, pair<int,int>> III;
+typedef vector<int> VI;
+typedef vector<II> VII;
+typedef vector<VI> VVI;
+typedef vector<VII> VVII;
+#define INF 1e9
 
 int main()
 {
+    int N, a;
     scanf("%d", &N);
-    for (int i=0;i<N;i++){
-        scanf("%d", &C[i]);
+    VVII g(N, VII());
+    VVI dist(N, VI(N, INF));
+    VI cost(N, INF);
+    for (int i=0; i<N; i++){
+        scanf("%d", &a);
+        cost[i] = a;
     }
 
-    priority_queue<state, vector<state>, less<state>> pq;
-    pq.push(state(INF, 0, 0));
-    int dp[N+1][N+1];
-    dp[0][0] = 0;
-    /* memset(dp, INF, sizeof dp); */
-    for (int i=0; i<N; i++) {
-        for (int j=0; j<N; j++) {
-            dp[i][j] = INF;
-            dp[i][0] = 0;
-        }
-    }
+    priority_queue<III, vector<III>, greater<III>> pq;
+    dist[0][0] = 0;
+    pq.push(III(0, II(0, 0)));
     while (!pq.empty()) {
-        state front = pq.top();
-        pq.pop();
-        int dist = front.dist;
-        int pos = front.pos;
-        int prevJump = front.prev_jump;
-        debug(dist << pos << prevJump);
-        /* if (dist > dp[pos][prevJump]) continue; */
-        int nex = pos+prevJump+1;
-        debug(nex);
-        debug(dp[pos][prevJump]);
-        debug(dp[nex][prevJump]);
-        if (dp[pos][prevJump] + C[nex] < dp[nex][prevJump]) {
-            dp[nex][prevJump] = dp[pos][prevJump] + C[nex];
-            pq.push(state(dp[nex][prevJump], nex, prevJump));
-        }
-        nex = pos-prevJump;
-        if (dp[pos][prevJump] + C[nex] < dp[nex][prevJump]) {
-            dp[nex][prevJump] = dp[pos][prevJump] + C[nex];
-            pq.push(state(dp[nex][prevJump], nex, prevJump));
+        III front = pq.top(); pq.pop();
+        int d = front.first;
+        int u = front.second.first, lastJump = front.second.second;
+        cout << u << " " << lastJump << '\n';
+        if (d > dist[u][lastJump]) continue;
+        VI next = {abs(lastJump)+1, -abs(lastJump)};
+        for (int nextJump : next) {
+            cout << "next: " << nextJump << '\n';
+            if (u+nextJump >= N || u+nextJump < 0) continue;
+            if (dist[u][lastJump] + cost[u+nextJump] < dist[u+nextJump][nextJump]) {
+                dist[u+nextJump][nextJump] = dist[u][lastJump] + cost[u+nextJump];
+                pq.push(III(dist[u+nextJump][nextJump], II(u+nextJump, nextJump)));
+            }
         }
     }
-
-    /* debugp(dp); */
-    debug(dp[N][N]);
-
-    /* for (int j = 0; j < (int)AdjList[u].size(); j++) { */
-    /*   ii v = AdjList[u][j];                       // all outgoing edges from u */
-    /*   if (dist[u] + v.second < dist[v.first]) { */
-    /*     dist[v.first] = dist[u] + v.second;                 // relax operation */
-    /*     pq.push(ii(dist[v.first], v.first)); */
-
-
-
-    /* memset(memo, -1, sizeof memo); */
-    /* memo[2][1] = C[2]; */
-    /* memo[1][1] = C[1]+C[2]; */
-    /* for (int k=1; k<N; k++) { */
-    /*     solve(N, k); */
-    /* } */
-    /* printf("%d\n", t); */
-
-    /* return 0; */
-
-
+    int m = INF;
+    for (int x : dist[N-1]) {
+        m = min(m, x);
+    }
+    printf("%d\n", m);
 }
 

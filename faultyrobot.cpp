@@ -1,70 +1,22 @@
-#include <algorithm>
-#include <cstdio>
-#include <cstring>
-#include <iostream>
-#include <string>
-#include <vector>
-#include <queue>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-#define debug(XXX) cerr << #XXX << ": " << XXX << '\n'
-#define debugv(X) cerr << #X << ": "; for(auto const& CCC:X) std::cerr<<CCC<<' '; cerr<<'\n'
-#define debuga(X, _a, _b) cerr << #X << ": "; for (int _i=_a; _i<_b; _i++) cout << X[_i] << " "; cout << '\n';
-#define debugapair(X, _a, _b) cerr << #X << ": "; for (int _i=_a; _i<_b; _i++) cout << '(' << X[_i].first << ',' << X[_i].second << ')' << " "; cout << '\n';
+typedef pair<int,int> II;
+typedef vector<int> VI;
+typedef vector<VI> VVI;
 
-typedef pair<int,int> ii;
-typedef vector<int> vi;
-
-vector<bool> visted;
-#define VISTED 1
-int c;
-vector<vi> Gforce;
-vector<vi> slip;
-
-void bfs()
-{
-    queue<int> q;
-    q.push(1);
-    visted[1] = true;
-    while (!q.empty()) {
-        int head = q.front();
-        q.pop();
-        for (int v: Gforce[head]) {
-            q.push(v);
-
-/* void dfs(int v, bool used_skip) */
-/* { */
-/*     /1* printf("In %d\n", v); *1/ */
-/*     if (visted[v] == VISTED) { */
-/*         return; */
-/*     } */
-/*     visted[v] = VISTED; */
-/*     for (int u: slip[v]) { */
-/*         /1* debug(visted[u]); *1/ */
-/*         /1* debug(used_skip); *1/ */
-/*         if (!used_skip) { */
-/*             dfs(u, true); */
-/*         } */
-/*     } */
-/*     for (int u: Gforce[v]) { */
-/*         dfs(u, used_skip); */
-/*     } */
-/*     /1* debug(Gforce[v].size()); *1/ */
-/*     if (Gforce[v].empty()) { */
-/*         c++; */
-/*     } */
-/*     /1* printf("out %d\n", v); *1/ */
-/* } */
+int visted[1001][1001];
+int c = 0;
+VVI Gforce;
+VVI slip;
 
 int main()
 {
     int n, m;
     int a, b;
     scanf("%d %d", &n, &m);
-    visted.assign(n+1, false);
-    Gforce.assign(n+1, vi());
-    slip.assign(n+1, vi());
+    Gforce.assign(n+1, VI());
+    slip.assign(n+1, VI());
     int gforcec = 0;
     for (int i=0; i<m; i++) {
         scanf("%d %d", &a, &b);
@@ -75,7 +27,43 @@ int main()
             slip[a].push_back(b);
         }
     }
-    dfs(1, false);
+    queue<II> q;
+    for (int v : Gforce[1]) {
+        q.push(II(v, 0));
+        visted[v][0] = 1;
+    }
+    for (int v : slip[1]) {
+        q.push(II(v, 1));
+        visted[v][1] = 1;
+    }
+    while (!q.empty()) {
+        bool doneSomething = false;
+        II p = q.front(); q.pop();
+        printf("%d %d\n", p.first, p.second);
+        if (visted[p.first][p.second]) {
+            continue;
+        }
+        visted[p.first][p.second] = 1;
+        if (p.second == 1) { //used slip
+            for (int v : Gforce[p.first]) {
+                q.push(II(v, 1));
+                doneSomething = 1;
+            }
+        } else {
+            for (int v : Gforce[p.first]) {
+                q.push(II(v, 0));
+                doneSomething = 1;
+            }
+            for (int v : slip[p.first]) {
+                q.push(II(v, 1));
+                doneSomething = 1;
+            }
+        }
+        if (!doneSomething) {
+            c++;
+        }
+    }
+
     printf("%d\n", c);
 
     return 0;

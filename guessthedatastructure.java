@@ -6,13 +6,13 @@ class Main {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        Queue<Integer> q = new ArrayDeque<>();
-        Queue<Integer> pq = new PriorityQueue<>((x, y) -> Integer.compare(y, x));
-        Stack<Integer> s = new Stack<>();
 
         int n;
         String testcase;
         while ((testcase = in.readLine()) != null) {
+            Queue<Integer> q = new ArrayDeque<>();
+            Queue<Integer> pq = new PriorityQueue<>((x, y) -> Integer.compare(y, x));
+            Stack<Integer> s = new Stack<>();
             n = Integer.parseInt(testcase);
             boolean isq = true;
             boolean ispq = true;
@@ -28,16 +28,19 @@ class Main {
                         s.push(data);
                         break;
                     case 2:
-                        // int qe = q.remove();
-                        // int pqe = pq.remove();
-                        // int se = s.pop();
-                        isq &= (q.remove() == data);
-                        ispq &= (pq.remove() == data);
-                        iss &= (s.pop() == data);
+                        try {
+                            isq &= (q.remove() == data);
+                            ispq &= (pq.remove() == data);
+                            iss &= (s.pop() == data);
+                        } catch (NoSuchElementException e) {
+                            isq = false;
+                            ispq = false;
+                            iss = false;
+                        }
                         break;
                 }
             }
-            System.out.println("" + isq + iss + ispq);
+            // out.write(""+testcase + " " + isq + iss + ispq + "\n");
             if (isq && !ispq && !iss) {
                 out.write("queue\n");
             } else if (!isq && ispq && !iss) {

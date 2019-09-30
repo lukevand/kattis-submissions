@@ -1,3 +1,5 @@
+import re
+import string
 from sys import stdin
 
 d = {
@@ -23,9 +25,13 @@ d = {
 
 n = int(stdin.readline())
 lines = [stdin.readline().strip() for _ in range(n)]
-print(lines)
+# print(lines)
 
 for line in lines:
     words = line.split()
-    for pattern
+    for k, v in d.items():
+        words[0] = re.sub(k, v, words[0], count=10, flags=re.IGNORECASE)
+        if words[0][0]
+        words[0] = string.capwords(words[0])
+    print(words)
 

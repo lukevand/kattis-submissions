@@ -15,7 +15,6 @@ int A[1000005];
 
 /* int f(int i, int c, int d) */
 /* { */
-/*     if (i == 0) */
 /*         return c+d; */
 
 /*     if (A[i] - c == 1) { */
