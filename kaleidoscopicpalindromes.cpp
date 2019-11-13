@@ -4,31 +4,28 @@ using namespace std;
 
 int main()
 {
-    int a, b, k;
+    int a, b, k, num, len;
     int count = 0;
-    bool stop;
-    vector<int> s(25, 0);
+    vector<int> s;
     scanf("%d %d %d", &a, &b, &k);
     for (int i=a; i<=b; i++) {
-        stop = false;
-        for (int base=2; !stop && base<=k; base++) {
+        for (int base=2; base<=k; base++) {
             s.clear();
-            int num = i;
-            int ix=0;
-            for (; num > 0; ix++) {
-                s[i] = num%base;
+            num = i;
+            while (num > 0) {
+                s.push_back(num%base);
                 num /= base;
             }
-            printf("%d\n", ix);
-            for (int jx=0; jx < ix/2; jx++) {
-                if (s[jx] != s[ix-jx]) {
-                    stop = true;
+            len = s.size();
+            for (int j=0; j < len/2; j++) {
+                if (s[j] != s[len-j-1]) {
+                    goto done;
                 }
             }
         }
-        if (!stop) {
-            count++;
-        }
+        count++;
+done:
+        ;
     }
     printf("%d\n", count);
 
