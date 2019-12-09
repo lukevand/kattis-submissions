@@ -17,12 +17,13 @@ def dfs(u):
         if visted[v] == UNVISTED:
             parent[v] = u
             dfs(v)
-        elif visted[v] == EXPLORED:
+        elif visted[v] == EXPLORED or visted[v] == VISTED:
             inCycle[v] = True
             w = u
+            print(w,u,v)
             while (w != v):
                 inCycle[w] = True
-                w = parent[w]
+                w = parent.get(w, v)
     visted[u] = VISTED
 
 
@@ -32,6 +33,7 @@ for _ in range(n):
     parent[dest] = depart
     if dest not in G:
         G[dest] = []
+
     if depart not in G:
         G[depart] = [dest]
     else:
@@ -39,10 +41,10 @@ for _ in range(n):
 
 for v in G.keys():
     inCycle[v] = False
-    visted[v] = -1
+    visted[v] = UNVISTED
 
 for v in G:
-    if visted[v] == UNVISTED:
+    if visted[v] != VISTED:
         dfs(v)
 
 for line in sys.stdin.readlines():

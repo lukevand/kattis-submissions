@@ -5,7 +5,7 @@ typedef vector<int> VI;
 typedef vector<VI> VVI;
 
 int x, y;
-int c;
+int c = 0;
 bool seen[501][501];
 int graph[501][501];
 bool hasLower[1002];
@@ -13,22 +13,18 @@ bool hasLower[1002];
 int di[] = {1,0,0,-1};
 int dj[] = {0,1,-1,0};
 
-void dfs(int i, int j) {
-    if (i < 0 || i >= y || j < 0 || j >= x) {
-        return;
-    }
+int dfs(int i, int j) {
     seen[i][j] = true;
     for (int d = 0; d < 4; d++) {
-        int nexti = i+di[d];
-        int nextj = j+dj[d];
-        if (0<=nexti&&nexti<y && 0<=nextj&&nextj<x && graph[nexti][nextj] < graph[i][j]) {
-            hasLower[graph[i][j]] = true;
+        int ii = i+di[d];
+        int jj = j+dj[d];
+        if (ii < 0 || ii >= y || jj < 0 || jj >= x) {
+            continue;
         }
-        if (!seen[nexti][nextj] && graph[nexti][nextj] == graph[i][j]) {
-            dfs(nexti, nextj);
+        if (graph[i][j] > graph[ii][jj]) {
+            hasLower[graph[ii][jj]] = true;
         }
     }
-
 }
 
 

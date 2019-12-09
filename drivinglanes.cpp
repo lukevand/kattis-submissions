@@ -3,14 +3,17 @@ using namespace std;
 
 #define INF 1e17
 
-typedef pair<int, int> ii;
+typedef long long L;
+typedef pair<int, int> II;
+typedef vector<int> VI;
+typedef vector<II> VII;
 
 #define debugp(X) for(auto const& CCC:X) std::cerr<<CCC<<' '; cerr<<'\n'
 #define debug(XXX) cerr << #XXX << ": " << XXX << '\n'
 
-long long straightaway[255]; // Length of ith straightaway
-ii curves[255];
-long long memo[515][515];
+vector<L> straightaway; // Length of ith straightaway
+VII curves;
+vector<vector<L>> memo(515, vector<L>(515));
 int n, m; // Number of straights, lanes
 int k, r; // Lane changing parameters
 
@@ -29,49 +32,46 @@ void pp() {
 
 int main()
 {
-    /* int tmp1, tmp2; */
-
     scanf("%d %d", &n, &m);
     scanf("%d %d", &k, &r);
     m += 1;
     for (int i=0; i<n; i++) {
-        scanf("%lld", &straightaway[i]);
+        L s;
+        scanf("%lld", &s);
+        straightaway.push_back(s);
     }
     for (int i=0; i<n-1; i++) {
         int s, c;
         scanf("%d %d", &s, &c);
-        curves[i] = ii(s, c);
+        curves.push_back(II(s, c));
     }
 
-    memo[1][0] = 0;
+    memo[1][0] = 0L;
 
     for (int i=2;i<m; i++) {
         memo[i][0] = INF;
     }
 
-    long long best;
-    for (int position=1; position<2*n+1; position+=2) {
-        /* debug(position/2); */
-        for (int lane=1; lane<m; lane++) {
+    L best;
+    for (int position=1; position<=n; position++) {
+        for (int lane=1; lane<=m; lane++) {
             best = INF;
-            for (int prev=1; prev<m; prev++) {
-                int change = abs(lane-prev)*r;
-                /* debug(change*k); */
-                if (change+k <= straightaway[position/2]) {
+            for (int prev=1; prev<=m; prev++) {
+                L change = abs(lane-prev)*r;
+                if (change+k <= straightaway[position]) {
                     best = min(best, change+memo[prev][position-1]);
                 }
-                memo[lane][position] = min(best, memo[lane][position-1]) + straightaway[position/2];
-                /* memo[lane][position] = (best < INF) ? best : INF; */
+                memo[lane][position] = min(best, memo[lane][position-1]) + straightaway[position];
             }
         }
 
-        if (position/2 >= n-1) break;
-        for (int lane=1; lane<m; lane++) {
-            memo[lane][position+1] = memo[lane][position] + curves[position/2].first + curves[position/2].second*lane;
+        /* if (position/2 >= n-1) break; */
+        for (int lane=1; lane<=m; lane++) {
+            memo[lane][position] += curves[position].first + curves[position].second*lane;
         }
     }
-    /* pp(); */
-    printf("%lld\n", memo[1][2*n-1]);
+    pp();
+    printf("%lld\n", memo[1][n-1]);
 
 
     return 0;

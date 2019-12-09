@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-class CD {
+class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String line = in.readLine();

@@ -5,6 +5,7 @@
 *.old
 __pycache__
 io
+.ccls-cache
 
 # kattis input output files
 *.ans

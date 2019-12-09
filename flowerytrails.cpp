@@ -41,28 +41,19 @@ int main() {
             if (dist[u] + v.second < dist[v.first]) {
                 parent[v.first].clear();
                 dist[v.first] = dist[u] + v.second;
-            }
-            if (dist[u] + v.second <= dist[v.first]) {
-                parent[v.first].push_back(II(u, v.second));
                 pq.push(II(dist[v.first], v.first));
             }
         }
     }
-    /* for (int i=0; i<P; i++) { */
-    /*     printf("%d: %d - ", i, dist[i]); */
-    /*     for (auto yyy: parent[i]) { */
-    /*         cout << yyy.first << ": " << yyy.second << ' '; */
-    /*     } */
-    /*     putchar('\n'); */
-    /* } */
+
     queue<int> q;
     q.push(P-1);
     while (!q.empty()) {
         int u = q.front(); q.pop();
-        for (II v: parent[u]) {
-            if (v.second != 0) {
+        for (II v: g[u]) {
+            if (dist[u] == dist[v.first] + v.second) {
                 total += v.second;
-                printf("v.second: %d\ttotal: %d\n", v.second, total);
+                q.push(v.first);
             }
         }
     }
